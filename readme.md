@@ -1,0 +1,1 @@
+Malý jednoduchý program pre Arduino (Nano, Uno) pomocou ktorého sa dajú naladiť vhodné hodnoty pre príkaz "tone" pre použitie tónov v Arduino projekte pomocou pasívneho bzučiaka.
