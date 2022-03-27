@@ -3,12 +3,14 @@
 // odoslaním prázdnych hodnôt sa zopakuje posledne zadanie pípnutie 
 
 //definuj piny a premenné
-int piezoPin = 8; // piezo element je pripojený na pine 8
+const int piezoPin = 8; // piezo element je pripojený na pine 8
 int fr = 1000; // fr = frequency - základná frekvencia - 1kHz
 int fr_alt = 1000; // pomocná premenná pre frekvenciu
 int dr = 1000; // dr = duration - základná dĺžka tónu - 1 sekunda
 int dr_alt = 1000; // pomocná pemenná pre dĺžku
 String input; // reťazec znakov z inputu serial monitora
+const int pause = 100; // ladenie funkčnosti serial komunikácie
+// hodnota 100 je istota, 50 bolo málo...
 
 void setup()
 {
@@ -16,7 +18,7 @@ void setup()
   tone(piezoPin, fr, dr); // pípni pri štarte
   // Serial print pomocou F šetri RAM ku !!
   Serial.println(F("Toto je kód na odladenie <beep> funkcie pre pasívny buzzer."));
-  delay(100); // po každom serial výpise mini pauza, inak sa to zasekávalo...
+  delay(pause); // po každom serial výpise mini pauza, inak sa to zasekávalo...
 } 
 
 void read_fr()
@@ -33,11 +35,11 @@ void read_fr()
     {
       fr = fr_alt;
       Serial.println(F("Hodnota mimo rozsah, zostáva pôvodná vhodná."));
-      delay(50);
+      delay(pause);
     }
     Serial.print(F("Frekvencia tónu: "));
     Serial.println(fr);
-    delay(100);
+    delay(pause);
     return;
   }
   delay(100);
@@ -57,11 +59,11 @@ void read_dr()
     {
       dr = dr_alt;
       Serial.println(F("Nulová dĺžka, zostáva pôvodná hodnota."));
-      delay(100);
+      delay(pause);
     }
     Serial.print(F("Dĺžka tónu: "));
     Serial.println(dr);
-    delay(100);
+    delay(pause);
     return;
   }
   delay(100);
@@ -76,14 +78,15 @@ void loop()
   */
 {
   Serial.println(F("Zadaj frekvenciu - asi od 100, do reálne tak 5000:"));
-  delay(100);
+  delay(pause);
   read_fr(); // vykonaj podprogram na načítanie frekvenicie
   // z toho podprogramu sa vráti až po tom ako dostane hodnotu frekvencie !!
   Serial.println(F("Zadaj trvanie tónu - v milisekundách:"));
-  delay(100);
+  delay(pause);
   read_dr(); // rovnako pre dĺžku tónu
   Serial.println(F("Hodnoty sú načítané, pípnem..."));
-  delay(100);
+  delay(pause);
   tone(piezoPin, fr, dr); // samotný tón
   //  tone(piezoPin, 100, 500);
+  delay(10);
 }
